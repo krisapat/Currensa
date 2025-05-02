@@ -13,13 +13,15 @@ interface PageProps {
 }
 
 export default async function StockDetail({ params }: PageProps) {
-  // ตรวจสอบว่า params.id ถูกส่งมาแล้ว
-  if (!params.id) {
+  // ตรวจสอบให้แน่ใจว่า params.id ถูกต้อง
+  if (!params || !params.id) {
     return <div className="p-4">ไม่พบข้อมูลหุ้น</div>;
   }
 
+  // ตรวจสอบ stockSymbols ให้ตรงกับ params.id
   const stock = stockSymbols.find(s => s.id.toLowerCase() === params.id.toLowerCase())
 
+  // หากไม่พบ stock ก็แสดงข้อความ
   if (!stock) {
     return <div className="p-4">ไม่พบข้อมูลหุ้น</div>
   }
