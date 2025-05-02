@@ -18,7 +18,7 @@ import { Undo2 } from 'lucide-react'
 interface ChartPoint {
     month: number
     value: number
-  }
+}
 export default function DCA() {
     const [initial, setInitial] = useState(0)
     const [monthly, setMonthly] = useState(0)
@@ -102,9 +102,10 @@ export default function DCA() {
                                         contentStyle={{ backgroundColor: '#f3f4f6', borderColor: '#4f46e5' }}
                                         labelStyle={{ color: '#111827' }}
                                         itemStyle={{ color: '#111827' }}
-                                        formatter={(value: any) => [`฿${value.toLocaleString()}`, 'Total Value']}
-                                        labelFormatter={(label: any) => `Month ${label}`}
+                                        formatter={(value: number | string) => [`฿${Number(value).toLocaleString()}`, 'Total Value']}
+                                        labelFormatter={(label: number | string) => `Month ${label}`}
                                     />
+
                                     <Line
                                         type="monotone"
                                         dataKey="value"
