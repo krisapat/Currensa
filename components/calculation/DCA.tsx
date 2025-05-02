@@ -15,13 +15,16 @@ import {
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Undo2 } from 'lucide-react'
-
+interface ChartPoint {
+    month: number
+    value: number
+  }
 export default function DCA() {
     const [initial, setInitial] = useState(0)
     const [monthly, setMonthly] = useState(0)
     const [rate, setRate] = useState(5)
     const [years, setYears] = useState(10)
-    const [data, setData] = useState<{ month: number; value: number }[]>([])
+    const [data, setData] = useState<ChartPoint[]>([])
     const [finalValue, setFinalValue] = useState(0)
 
     useEffect(() => {

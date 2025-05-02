@@ -5,7 +5,6 @@ import { useTheme } from 'next-themes'
 
 const AdvancedChart = ({
   symbol = 'NASDAQ:AAPL',
-  width = '100%',
   height = '80vh',
   uniqueId = 'advanced',
 }) => {

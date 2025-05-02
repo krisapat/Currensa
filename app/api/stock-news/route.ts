@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server'
 
+interface Article {
+  title: string
+  description: string
+  url: string
+  publishedAt: string
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const symbol = searchParams.get('symbol') || 'AAPL'
@@ -8,7 +15,7 @@ export async function GET(request: Request) {
     const res = await fetch(`https://newsapi.org/v2/everything?q=${symbol}&apiKey=${process.env.NEWS_API_KEY}`)
     const data = await res.json()
 
-    const articles = data.articles.map((article: any) => ({
+    const articles = (data.articles as Article[]).map((article) => ({
       title: article.title,
       description: article.description,
       url: article.url,
