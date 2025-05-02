@@ -30,6 +30,7 @@ export default function DividendCalculator() {
         }
     }, [monthlyDividend, annualReturnPercent]);
 
+
     return (
         <div
             className="max-w-3xl md:w-3xl mx-auto space-y-8 p-4 m-4 bg-white/30 dark:bg-white/10 rounded-xl border

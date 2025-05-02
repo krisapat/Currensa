@@ -22,7 +22,7 @@ const AdvancedChart = ({
     if (isChartLoaded.current) {
       const existingScript = container.querySelector('script')
       if (existingScript) {
-        existingScript.remove() 
+        existingScript.remove()
       }
     }
 
@@ -39,14 +39,15 @@ const AdvancedChart = ({
       hide_top_toolbar: false,
       hide_side_toolbar: false,
       withdateranges: true,
-      studies: ['MACD@tv-basicstudies', 'RSI@tv-basicstudies'], 
+      studies: ['MACD@tv-basicstudies', 'RSI@tv-basicstudies'],
       container_id: `tradingview-advanced-chart-${uniqueId}`,
     })
 
     container.innerHTML = ''
     container.appendChild(script)
     isChartLoaded.current = true
-  }, [resolvedTheme, symbol])
+  }, [resolvedTheme, symbol, uniqueId])
+
 
   return (
     <div
