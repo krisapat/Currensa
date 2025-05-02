@@ -6,8 +6,16 @@ import Link from 'next/link'
 import { Undo2 } from 'lucide-react'
 import { quicksand } from '@/utils/font'
 
-// ห้ามใช้ `getServerSideProps` หรือ `getStaticProps` ในโฟลเดอร์ `app/`
-export default async function StockDetail({ params }: { params: { id: string } }) {
+interface Stock {
+  id: string
+  symbol: string
+}
+
+interface StockDetailProps {
+  params: { id: string }
+}
+
+export default async function StockDetail({ params }: StockDetailProps) {
   const stock = stockSymbols.find(s => s.id.toLowerCase() === params.id.toLowerCase())
 
   if (!stock) return <div className="p-4">ไม่พบข้อมูลหุ้น</div>
