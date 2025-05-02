@@ -41,41 +41,45 @@ export default function CurrencyConverter() {
 
     useEffect(() => {
         if (amount === '' || isNaN(Number(amount))) return;
+
+        const convert = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
+                const data = await res.json();
+                const newRate = data.rates[toCurrency];
+                if (newRate) {
+                    setRate(newRate);
+                    setConverted(Number(amount) * newRate);
+                }
+
+                const endDate = new Date().toISOString().split('T')[0];
+                const start = new Date();
+                start.setFullYear(start.getFullYear() - 1);
+                const startDate = start.toISOString().split('T')[0];
+
+                const historyRes = await fetch(
+                    `https://api.frankfurter.app/${startDate}..${endDate}?from=${fromCurrency}&to=${toCurrency}`
+                );
+                const historyData = await historyRes.json();
+
+                const chartFormatted = (Object.entries(historyData.rates) as [string, Record<string, number>][])
+                    .map(([date, value]) => ({
+                        month: date,
+                        value: value[toCurrency],
+                    }));
+
+
+                setChartData(chartFormatted);
+            } catch (e) {
+                console.error('Conversion error:', e);
+            }
+            setLoading(false);
+        };
+
         convert();
     }, [amount, fromCurrency, toCurrency]);
 
-    async function convert() {
-        setLoading(true);
-        try {
-            const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
-            const data = await res.json();
-            const newRate = data.rates[toCurrency];
-            if (newRate) {
-                setRate(newRate);
-                setConverted(Number(amount) * newRate);
-            }
-
-            const endDate = new Date().toISOString().split('T')[0];
-            const start = new Date();
-            start.setFullYear(start.getFullYear() - 1);
-            const startDate = start.toISOString().split('T')[0];
-
-            const historyRes = await fetch(
-                `https://api.frankfurter.app/${startDate}..${endDate}?from=${fromCurrency}&to=${toCurrency}`
-            );
-            const historyData = await historyRes.json();
-
-            const chartFormatted = Object.entries(historyData.rates).map(([date, value]: any) => ({
-                month: date,
-                value: value[toCurrency],
-            }));
-
-            setChartData(chartFormatted);
-        } catch (e) {
-            console.error('Conversion error:', e);
-        }
-        setLoading(false);
-    }
 
     return (
         <div className="min-h-screen px-4 pt-20">
