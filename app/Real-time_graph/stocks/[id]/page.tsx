@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next'
 import { stockSymbols } from '@/utils/stockSymbols'
 import AdvancedChart from '@/components/minichart/AdvancedChart'
 import StockNews from '@/components/minichart/StockNews'
@@ -6,10 +7,16 @@ import Link from 'next/link'
 import { Undo2 } from 'lucide-react'
 import { quicksand } from '@/utils/font'
 
+interface Stock {
+  id: string
+  symbol: string
+}
 
-export default function StockDetail({ params }: { params: { id: string } }) {
-  const stock = stockSymbols.find(s => s.id.toLowerCase() === params.id.toLowerCase())
+interface StockDetailProps {
+  stock: Stock | null
+}
 
+export default function StockDetail({ stock }: StockDetailProps) {
   if (!stock) return <div className="p-4">ไม่พบข้อมูลหุ้น</div>
 
   return (
@@ -33,4 +40,16 @@ export default function StockDetail({ params }: { params: { id: string } }) {
       </div>
     </div>
   )
+}
+
+// ใช้ getServerSideProps
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params as { id: string }
+  const stock = stockSymbols.find(s => s.id.toLowerCase() === id.toLowerCase()) || null
+
+  return {
+    props: {
+      stock
+    }
+  }
 }
