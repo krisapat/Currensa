@@ -6,11 +6,6 @@ import Link from 'next/link'
 import { Undo2 } from 'lucide-react'
 import { quicksand } from '@/utils/font'
 
-interface Stock {
-  id: string
-  symbol: string
-}
-
 interface StockDetailProps {
   params: { id: string }
 }
