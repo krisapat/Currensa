@@ -27,7 +27,10 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import Link from 'next/link';
-
+interface ChartPoint {
+    month: string;
+    value: number;
+  }
 const currencies = ['USD', 'GBP', 'THB', 'JPY'];
 
 export default function CurrencyConverter() {
@@ -36,7 +39,7 @@ export default function CurrencyConverter() {
     const [toCurrency, setToCurrency] = useState('THB');
     const [converted, setConverted] = useState<number>(0);
     const [rate, setRate] = useState<number | null>(null);
-    const [chartData, setChartData] = useState<any[]>([]);
+    const [chartData, setChartData] = useState<ChartPoint[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
