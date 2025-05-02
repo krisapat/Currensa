@@ -1,103 +1,105 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls, Center, Environment } from '@react-three/drei'
+import MyModel from '@/components/MyModel'
+import FadeUpWhenVisible from "@/components/animation/FadeUpWhenVisible"
+import MiniChartSwiper from "@/components/minichart/MiniChartSwiper"
+import { Button } from "@/components/ui/button"
+import { quicksand } from "@/utils/font"
+import Link from "next/link"
+
+const page = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="p-4">
+      {/* 1 */}
+      <div
+        className="flex flex-col md:flex-row mt-20 justify-between items-center z-10
+                  bg-white/30 dark:bg-white/10
+                  border border-white/30 dark:border-white/10
+                  backdrop-blur-md rounded-xl"
+        style={{ minHeight: 'calc(100vh - 80px)' }}
+      >
+        <div className="w-full md:w-1/2 px-8">
+          <h1 className={`${quicksand.className} text-3xl mb-2 text-left font-semibold`}>
+            View stocks in real time<br />
+            Easy analysis<br />
+            All in one website
+          </h1>
+          <h2 className={`${quicksand.className} text-xl mb-2 text-left font-semibold`}>
+            Follow real-time stock charts with news, analysis and calculation tools for investors of all levels.
+          </h2>
+          <Button>
+            <Link href={'/function'}>View features</Link>
+          </Button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="w-full md:w-1/2" style={{ height: 'calc(100vh - 80px)' }}>
+          <Canvas>
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[5, 5, 5]} intensity={2.5} color="#ffffff" />
+            <pointLight position={[-3, -3, 5]} intensity={0.5} color="#ffe599" />
+            <Center>
+              <MyModel />
+            </Center>
+            <OrbitControls enableZoom={false} enableRotate={true} target={[0, 0, 0]} />
+            <Environment preset="sunset" background={false} />
+          </Canvas>
+        </div>
+      </div>
+      {/* 2 */}
+      <div className="w-full z-10 flex flex-col justify-center items-center mt-9" style={{ minHeight: 'calc(100vh - 80px)' }}>
+        <FadeUpWhenVisible>
+          <h1 className={`${quicksand.className} text-3xl mb-2 text-center font-semibold`}>Function</h1>
+        </FadeUpWhenVisible>
+        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
+          <div
+            className="relative p-6 rounded-xl border min-h-[300px] transition-all duration-300 hover:scale-[1.01]
+                      bg-white/30 dark:bg-white/10
+                      border-white/30 dark:border-white/10
+                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
+                      backdrop-blur-lg"
+          >
+            <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Real-time graph</h1>
+            <h2 className={`${quicksand.className} text-lg mb-2 text-center font-md`}>
+              1.Track asset graphs in real time<br />
+              2.There are free indicators from Trading View available<br />
+              3.There are a variety of assets to look at
+            </h2>
+            <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+              <Link href={'/Real-time_graph'}>View features</Link>
+            </Button>
+          </div>
+
+
+          <div
+            className="relative p-6 rounded-xl border min-h-[300px] transition-all duration-300 hover:scale-[1.01]
+                      bg-white/30 dark:bg-white/10
+                      border-white/30 dark:border-white/10
+                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
+                      backdrop-blur-lg"
+          >
+            <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Calculation</h1>
+            <h2 className={`${quicksand.className} text-lg mb-2 text-center font-md`}>
+              1.Calculate DCA Investment<br />
+              2.Currency conversion<br />
+              3.Calculate dividends
+            </h2>
+            <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+              <Link href={'/calculation'}>View features</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+      {/* 3 */}
+      <div className="w-[90vw] mx-auto mt-8 z-10">
+        <div className="my-auto px-8">
+          <FadeUpWhenVisible>
+            <h1 className={`${quicksand.className} text-3xl mb-8 text-center font-semibold`}>Recommended Stocks</h1>
+            <MiniChartSwiper />
+          </FadeUpWhenVisible>
+        </div>
+      </div>
     </div>
-  );
+  )
 }
+export default page
