@@ -27,7 +27,7 @@ const page = () => {
             Follow real-time stock charts with news, analysis and calculation tools for investors of all levels.
           </h2>
           <Button>
-            <Link href={'/function'}>View features</Link>
+            <Link href={'/Real-time_graph'}>View features</Link>
           </Button>
         </div>
         <div className="w-full md:w-1/2" style={{ height: 'calc(100vh - 80px)' }}>

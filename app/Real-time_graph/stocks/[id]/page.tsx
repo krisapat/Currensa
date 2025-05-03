@@ -1,6 +1,6 @@
 import { stockSymbols } from '@/utils/stockSymbols'
-import AdvancedChart from '@/components/minichart/AdvancedChart'
-import StockNews from '@/components/minichart/StockNews'
+import AdvancedChart from '@/components/realtimeGraph/AdvancedChart'
+import StockNews from '@/components/realtimeGraph/StockNews'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Undo2 } from 'lucide-react'
