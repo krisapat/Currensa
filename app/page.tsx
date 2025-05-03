@@ -1,13 +1,10 @@
-'use client'
 
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Center, Environment } from '@react-three/drei'
-import MyModel from '@/components/MyModel'
 import FadeUpWhenVisible from "@/components/animation/FadeUpWhenVisible"
 import MiniChartSwiper from "@/components/minichart/MiniChartSwiper"
 import { Button } from "@/components/ui/button"
 import { quicksand } from "@/utils/font"
 import Link from "next/link"
+import UseModel from '@/components/UseModel'
 
 const page = () => {
   return (
@@ -34,16 +31,7 @@ const page = () => {
           </Button>
         </div>
         <div className="w-full md:w-1/2" style={{ height: 'calc(100vh - 80px)' }}>
-          <Canvas>
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[5, 5, 5]} intensity={2.5} color="#ffffff" />
-            <pointLight position={[-3, -3, 5]} intensity={0.5} color="#ffe599" />
-            <Center>
-              <MyModel />
-            </Center>
-            <OrbitControls enableZoom={false} enableRotate={true} target={[0, 0, 0]} />
-            <Environment preset="sunset" background={false} />
-          </Canvas>
+          <UseModel />
         </div>
       </div>
       {/* 2 */}
