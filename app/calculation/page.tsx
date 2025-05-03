@@ -2,6 +2,11 @@ import FadeUpWhenVisible from "@/components/animation/FadeUpWhenVisible"
 import { Button } from "@/components/ui/button"
 import { quicksand } from "@/utils/font"
 import Link from "next/link"
+import { Metadata } from "next"
+export const metadata: Metadata = {
+    title: 'Currensa | DCA Calculators',
+    description: 'Access powerful financial tools including DCA investment planning, currency conversion, and dividend calculators — all in one place to support smarter investing decisions.',
+}
 
 const calculation = () => {
     return (
