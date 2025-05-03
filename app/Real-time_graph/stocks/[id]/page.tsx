@@ -7,12 +7,12 @@ import { Undo2 } from 'lucide-react'
 import { quicksand } from '@/utils/font'
 import { Metadata } from 'next'
 export interface PageProps {
-  params: { id: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
+  params: Promise<{ id: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = params
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const { id } = await props.params
   const stock = stockSymbols.find((s) => s.id.toLowerCase() === id.toLowerCase())
 
   if (!stock) {
@@ -28,12 +28,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-
-
-export default function StockDetail({ params }: PageProps) {
+export default async function StockDetail({ params }: PageProps) {
+  const { id } = await params
 
   const stock = stockSymbols.find(
-    (s) => s.id.toLowerCase() === params.id.toLowerCase()
+    (s) => s.id.toLowerCase() === id.toLowerCase()
   )
 
   if (!stock) return <div className="p-4">ไม่พบข้อมูลหุ้น</div>
