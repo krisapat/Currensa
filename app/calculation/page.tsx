@@ -37,7 +37,7 @@ const calculation = () => {
                         Convert currencies in real time
                     </h2>
                     <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <Link href={'/calculation/Currency_conversion'}>View features</Link>
+                        <Link href={'/calculation/currency_conversion'}>View features</Link>
                     </Button>
                 </div>
 
@@ -54,7 +54,7 @@ const calculation = () => {
                         Tell us the dividend you want and the system will calculate how much you need to invest
                     </h2>
                     <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <Link href={'/calculation/Calculate_dividends'}>View features</Link>
+                        <Link href={'/calculation/calculate_dividends'}>View features</Link>
                     </Button>
                 </div>
             </div>
