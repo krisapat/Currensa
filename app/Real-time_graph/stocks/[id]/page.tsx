@@ -6,12 +6,12 @@ import Link from 'next/link'
 import { Undo2 } from 'lucide-react'
 import { quicksand } from '@/utils/font'
 import { Metadata } from 'next'
-
-export async function generateMetadata({
-  params,
-}: {
+export interface PageProps {
   params: { id: string }
-}): Promise<Metadata> {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = params
   const stock = stockSymbols.find((s) => s.id.toLowerCase() === id.toLowerCase())
 
@@ -28,11 +28,10 @@ export async function generateMetadata({
   }
 }
 
-export default function StockDetail({
-  params,
-}: {
-  params: { id: string }
-}) {
+
+
+export default function StockDetail({ params }: PageProps) {
+
   const stock = stockSymbols.find(
     (s) => s.id.toLowerCase() === params.id.toLowerCase()
   )
@@ -42,9 +41,7 @@ export default function StockDetail({
   return (
     <div className="h-screen pt-20 px-4">
       <div className="flex space-x-4 my-4">
-        <h1 className={`${quicksand.className} text-2xl font-bold`}>
-          {stock.id}
-        </h1>
+        <h1 className={`${quicksand.className} text-2xl font-bold`}>{stock.id}</h1>
         <Button className="bg-white dark:bg-black/30">
           <Link href="/Real-time_graph">
             <Undo2 className="text-black dark:text-white" />
