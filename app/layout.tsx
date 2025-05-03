@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/navbar/navbarcom/darkmode/theme-provider";
 import Navbar from "@/components/navbar/Navbar";
