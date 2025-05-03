@@ -6,6 +6,8 @@ import { quicksand } from "@/utils/font"
 import StockFilter, { Category } from '@/components/realtimeGraph/StockFilter'
 import { stockSymbols } from '@/utils/stockSymbols'
 import Link from 'next/link'
+import Head from 'next/head'
+
 export default function StockGrid() {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState<Category>('all')
@@ -17,21 +19,28 @@ export default function StockGrid() {
   })
 
   return (
-    <div className="mt-20 px-4 pt-4">
-      <StockFilter search={search} setSearch={setSearch} category={category} setCategory={setCategory} />
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {filteredStocks.map((stock) => (
-          <div key={stock.id} className="p-4 rounded-xl border transition-all duration-300 hover:scale-[1.01]
-                        bg-white/30 dark:bg-white/10
-                        border-white/30 dark:border-white/10
-                        shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
-                        backdrop-blur-lg"
-            >
-            <Link href={`/Real-time_graph/stocks/${stock.id}`} passHref className={`${quicksand.className} text-lg mb-2 text-center font-semibold`}>{stock.id}</Link>
-            <MiniChart symbol={stock.symbol} height="200" uniqueId={stock.id} />
-          </div>
-        ))}
+    <>
+      <Head>
+        <title>Currensa | Real-Time Stock Charts</title>
+        <meta name="description" content="Analyze stocks in real-time with interactive charts, live price updates, historical performance, and technical indicators — all in one intuitive dashboard for investors." />
+      </Head>
+
+      <div className="mt-20 px-4 pt-4">
+        <StockFilter search={search} setSearch={setSearch} category={category} setCategory={setCategory} />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          {filteredStocks.map((stock) => (
+            <div key={stock.id} className="p-4 rounded-xl border transition-all duration-300 hover:scale-[1.01]
+                          bg-white/30 dark:bg-white/10
+                          border-white/30 dark:border-white/10
+                          shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
+                          backdrop-blur-lg"
+              >
+              <Link href={`/Real-time_graph/stocks/${stock.id}`} passHref className={`${quicksand.className} text-lg mb-2 text-center font-semibold`}>{stock.id}</Link>
+              <MiniChart symbol={stock.symbol} height="200" uniqueId={stock.id} />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

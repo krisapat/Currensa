@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/button"
 import { quicksand } from "@/utils/font"
 import Link from "next/link"
 import UseModel from '@/components/UseModel'
+import { Metadata } from "next"
+export const metadata: Metadata = {
+  title: "Currensa | Real-Time Stock Charts & Investment Tools",
+  description: "Track live stock charts, get instant financial news, and analyze trends with powerful tools — all in one smart platform for modern investors.",
+};
 
 const page = () => {
   return (
@@ -14,10 +19,10 @@ const page = () => {
         className="flex flex-col md:flex-row mt-20 justify-between items-center z-10
                   bg-white/30 dark:bg-white/10
                   border border-white/30 dark:border-white/10
-                  backdrop-blur-md rounded-xl"
-        style={{ minHeight: 'calc(100vh - 80px)' }}
+                  backdrop-blur-md rounded-xl
+                  md:min-h-[80vh]"
       >
-        <div className="w-full md:w-1/2 px-8">
+        <div className="w-full md:w-1/2 p-8">
           <h1 className={`${quicksand.className} text-3xl mb-2 text-left font-semibold`}>
             View stocks in real time<br />
             Easy analysis<br />
@@ -30,7 +35,7 @@ const page = () => {
             <Link href={'/Real-time_graph'}>View features</Link>
           </Button>
         </div>
-        <div className="w-full md:w-1/2" style={{ height: 'calc(100vh - 80px)' }}>
+        <div className="w-full md:w-1/2 h-[80vh] p-8" >
           <UseModel />
         </div>
       </div>
@@ -47,7 +52,7 @@ const page = () => {
                       shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
                       backdrop-blur-lg"
           >
-            <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Real-time graph</h1>
+            <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Real-Time Stock Charts</h1>
             <h2 className={`${quicksand.className} text-lg mb-2 text-center font-md`}>
               1.Track asset graphs in real time<br />
               2.There are free indicators from Trading View available<br />

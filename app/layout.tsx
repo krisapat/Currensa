@@ -4,11 +4,6 @@ import { ThemeProvider } from "@/components/navbar/navbarcom/darkmode/theme-prov
 import Navbar from "@/components/navbar/Navbar";
 import { quicksand } from "@/utils/font";
 
-export const metadata: Metadata = {
-  title: "Finverse",
-  description: "Finverse",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
