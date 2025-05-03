@@ -25,9 +25,14 @@ export default function StockNews({ symbol }: { symbol: string }) {
 
         const data = await res.json()
         setNews(data.articles ?? [])
-      } catch (err: any) {
-        console.error(err)
-        setError('Unable to load news at this time.')
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error(err.message)
+          setError('Unable to load news at this time.')
+        } else {
+          console.error('Unexpected error', err)
+          setError('An unknown error occurred.')
+        }
       } finally {
         setLoading(false)
       }
