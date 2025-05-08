@@ -53,7 +53,7 @@ const page = () => {
                       backdrop-blur-lg"
           >
             <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Real-Time Stock Charts</h1>
-            <h2 className={`${quicksand.className} text-lg mb-2 text-center font-md`}>
+            <h2 className={`${quicksand.className} text-md md:text-lg mb-2 text-center font-md`}>
               1.Track asset graphs in real time<br />
               2.There are free indicators from Trading View available<br />
               3.There are a variety of assets to look at
@@ -72,7 +72,7 @@ const page = () => {
                       backdrop-blur-lg"
           >
             <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Calculation</h1>
-            <h2 className={`${quicksand.className} text-lg mb-2 text-center font-md`}>
+            <h2 className={`${quicksand.className} text-md md:text-lg mb-2 text-center font-md`}>
               1.Calculate DCA Investment<br />
               2.Currency conversion<br />
               3.Calculate dividends
