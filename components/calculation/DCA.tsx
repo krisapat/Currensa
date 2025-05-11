@@ -47,15 +47,16 @@ export default function DCA() {
     const totalInvested = initial + monthly * (years * 12)
     const totalGain = finalValue - totalInvested
     return (
-        <div className="min-h-screen px-4 pt-20">
-            <div className="max-w-3xl md:w-3xl mx-auto space-y-8 p-4 m-4 bg-white/30 dark:bg-white/10 rounded-xl border
-                      border-white/30 dark:border-white/10
-                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
-                      backdrop-blur-lg
-                      ">
+        <div className="relative flex justify-center items-center min-h-[80vh] overflow-hidden pt-28">
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-gradient-to-b from-black/1 via-white/70 to-transparent dark:from-white/10 dark:via-[#0c0c0c]/50 dark:to-transparent" />
+            </div>
+
+            <div className="relative w-[90vw] max-w-3xl mx-auto space-y-8 p-8 border-white/20 shadow-md backdrop-blur-lg rounded-xl
+                      bg-white/50 dark:bg-white/10 z-10">
                 <div className='flex justify-between items-center space-x-4 mx-auto'>
                     <h1 className="text-3xl font-bold">DCA Investment Calculator</h1>
-                    <Button className='bg-white dark:bg-black/30'>
+                    <Button asChild className='bg-white dark:bg-black/30'>
                         <Link href={'/calculation'}><Undo2 className='text-black dark:text-white' /></Link>
                     </Button>
                 </div>

@@ -2,10 +2,12 @@
 import FadeUpWhenVisible from "@/components/animation/FadeUpWhenVisible"
 import MiniChartSwiper from "@/components/minichart/MiniChartSwiper"
 import { Button } from "@/components/ui/button"
-import { quicksand } from "@/utils/font"
 import Link from "next/link"
 import UseModel from '@/components/UseModel'
+import { LineChart, Calculator } from 'lucide-react';
 import { Metadata } from "next"
+import { FeatureCard } from "@/components/้home/FeatureCard"
+import { FunctionCard } from "@/components/้home/FunctionCard"
 export const metadata: Metadata = {
   title: "Currensa | Real-Time Stock Charts & Investment Tools",
   description: "Track live stock charts, get instant financial news, and analyze trends with powerful tools — all in one smart platform for modern investors.",
@@ -13,86 +15,80 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div className="p-4">
-      {/* 1 */}
-      <div
-        className="flex flex-col md:flex-row mt-20 justify-between items-center z-10
-                  bg-white/30 dark:bg-white/10
-                  border border-white/30 dark:border-white/10
-                  backdrop-blur-md rounded-xl
-                  md:min-h-[80vh]"
-      >
-        <div className="w-full md:w-1/2 p-8">
-          <h1 className={`${quicksand.className} text-3xl mb-2 text-left font-semibold`}>
-            View stocks in real time<br />
-            Easy analysis<br />
-            All in one website
-          </h1>
-          <h2 className={`${quicksand.className} text-xl mb-2 text-left font-semibold`}>
-            Follow real-time stock charts with news, analysis and calculation tools for investors of all levels.
-          </h2>
-          <Button>
-            <Link href={'/Real-time_graph'}>View features</Link>
-          </Button>
-        </div>
-        <div className="w-full md:w-1/2 h-[80vh] p-8" >
+    <div>
+      {/* HERO SECTION */}
+      <section className="relative flex justify-center items-center min-h-screen overflow-hidden">
+        <div className="absolute inset-0 z-0">
           <UseModel />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/1 via-white/70 to-transparent dark:from-white/10 dark:via-[#0c0c0c]/50 dark:to-transparent" />
         </div>
-      </div>
-      {/* 2 */}
-      <div className="w-full z-10 flex flex-col justify-center items-center mt-9" style={{ minHeight: 'calc(100vh - 80px)' }}>
+
         <FadeUpWhenVisible>
-          <h1 className={`${quicksand.className} text-3xl mb-2 text-center font-semibold`}>Function</h1>
+          <div className="relative z-10 flex flex-col items-center text-center px-4">
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6 drop-shadow-lg">
+              Plan your investments<br />with real-time stock data
+            </h1>
+            <p className="text-xl md:text-2xl max-w-xl mb-6">
+              Currensa has all the features an investor needs — stock charts, economic news, calculators and in-depth analysis
+            </p>
+            <div className="flex gap-4">
+              <Button asChild size="lg">
+                <Link href="/Real-time_graph">Get Started</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="#features">See all features</Link>
+              </Button>
+            </div>
+          </div>
         </FadeUpWhenVisible>
-        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
-          <div
-            className="relative p-6 rounded-xl border min-h-[300px] transition-all duration-300 hover:scale-[1.01]
-                      bg-white/30 dark:bg-white/10
-                      border-white/30 dark:border-white/10
-                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
-                      backdrop-blur-lg"
-          >
-            <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Real-Time Stock Charts</h1>
-            <h2 className={`${quicksand.className} text-md md:text-lg mb-2 text-center font-md`}>
-              1.Track asset graphs in real time<br />
-              2.There are free indicators from Trading View available<br />
-              3.There are a variety of assets to look at
-            </h2>
-            <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-              <Link href={'/Real-time_graph'}>View features</Link>
-            </Button>
-          </div>
+      </section>
 
-
-          <div
-            className="relative p-6 rounded-xl border min-h-[300px] transition-all duration-300 hover:scale-[1.01]
-                      bg-white/30 dark:bg-white/10
-                      border-white/30 dark:border-white/10
-                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
-                      backdrop-blur-lg"
-          >
-            <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Calculation</h1>
-            <h2 className={`${quicksand.className} text-md md:text-lg mb-2 text-center font-md`}>
-              1.Calculate DCA Investment<br />
-              2.Currency conversion<br />
-              3.Calculate dividends
-            </h2>
-            <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-              <Link href={'/calculation'}>View features</Link>
-            </Button>
-          </div>
+      {/* FEATURE CARDS */}
+      <section id="features" className="w-[95vw] mx-auto mt-20 py-12 px-6 rounded-xl backdrop-blur-md bg-white/50 dark:bg-white/10 border border-white/20 shadow-lg">
+        <h2 className="text-3xl font-semibold text-center mb-12">What can we do?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-center">
+          <FeatureCard icon={<LineChart className="w-10 h-10 text-blue-500 mx-auto mb-4" />} title="Real-time stock chart" desc="View minute-by-minute stock price movements with indicators from TradingView." />
+          <FeatureCard icon={<Calculator className="w-10 h-10 text-green-500 mx-auto mb-4" />} title="Financial calculator" desc="Calculate DCA, convert currencies and analyze dividends in a few clicks." />
         </div>
-      </div>
-      {/* 3 */}
-      <div className="w-[90vw] mx-auto mt-8 z-10">
-        <div className="my-auto px-8">
-          <FadeUpWhenVisible>
-            <h1 className={`${quicksand.className} text-3xl mb-8 text-center font-semibold`}>Recommended Stocks</h1>
+      </section>
+
+      {/* FUNCTION SECTION */}
+      <section className="w-full py-20 px-4">
+        <h2 className="text-3xl font-semibold text-center mb-12">Main features of Currensa</h2>
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <FunctionCard
+            title="Real-time stock chart"
+            content={[
+              'Follow live asset charts',
+              'Free indicators from TradingView',
+              'Multi-asset portfolio including stocks, crypto and indices',
+            ]}
+            link="/Real-time_graph"
+          />
+          <FunctionCard
+            title="Calculating tools"
+            content={[
+              'Calculate DCA Investment',
+              'Convert foreign currencies',
+              'Calculate dividend yield',
+            ]}
+            link="/calculation"
+          />
+        </div>
+      </section>
+
+      {/* RECOMMENDED STOCKS */}
+      <section className="w-full px-6 py-20 bg-gradient-to-t from-white/20 to-transparent dark:from-white/5">
+        <div className="w-full h-auto bg-white/50 dark:bg-white/10 p-8 rounded-xl border border-white/20 shadow-md backdrop-blur-lg">
+          <h2 className="text-3xl font-semibold text-center mb-12">Recommended stocks</h2>
+          <div className="max-w-5xl mx-auto">
             <MiniChartSwiper />
-          </FadeUpWhenVisible>
+          </div>
         </div>
-      </div>
+
+      </section>
     </div>
+
   )
 }
 export default page

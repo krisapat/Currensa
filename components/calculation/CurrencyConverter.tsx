@@ -27,14 +27,16 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import Link from 'next/link';
+
 interface ChartPoint {
     month: string;
     value: number;
-  }
+}
+
 const currencies = ['USD', 'GBP', 'THB', 'JPY'];
 
 export default function CurrencyConverter() {
-    const [amount, setAmount] = useState<number | ''>('');
+    const [amount, setAmount] = useState<number | ''>(''); // Amount to convert
     const [fromCurrency, setFromCurrency] = useState('USD');
     const [toCurrency, setToCurrency] = useState('THB');
     const [converted, setConverted] = useState<number>(0);
@@ -42,58 +44,86 @@ export default function CurrencyConverter() {
     const [chartData, setChartData] = useState<ChartPoint[]>([]);
     const [loading, setLoading] = useState(false);
 
+    // Function to load exchange rates and historical data
+    const loadExchangeData = async () => {
+        setLoading(true);
+
+        try {
+            // First, check if we have the cached data in localStorage
+            const cachedRates = localStorage.getItem(`rates-${fromCurrency}-${toCurrency}`);
+            const cachedChartData = localStorage.getItem(`chart-${fromCurrency}-${toCurrency}`);
+            const cachedTimestamp = localStorage.getItem(`cacheTimestamp`);
+
+            const now = Date.now();
+            const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
+
+            // Use cached data if it's within the time limit (1 hour)
+            if (cachedRates && cachedChartData && cachedTimestamp && (now - parseInt(cachedTimestamp)) < oneHour) {
+                setRate(JSON.parse(cachedRates));
+                setChartData(JSON.parse(cachedChartData));
+                setConverted(Number(amount) * JSON.parse(cachedRates));
+                setLoading(false);
+                return;
+            }
+
+            // Fetch new data from the API
+            const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
+            const data = await res.json();
+            const newRate = data.rates[toCurrency];
+            if (newRate) {
+                setRate(newRate);
+                setConverted(Number(amount) * newRate);
+
+                // Cache the exchange rate in localStorage
+                localStorage.setItem(`rates-${fromCurrency}-${toCurrency}`, JSON.stringify(newRate));
+            }
+
+            // Fetch historical data for the chart
+            const endDate = new Date().toISOString().split('T')[0];
+            const start = new Date();
+            start.setFullYear(start.getFullYear() - 1);
+            const startDate = start.toISOString().split('T')[0];
+
+            const historyRes = await fetch(
+                `https://api.frankfurter.app/${startDate}..${endDate}?from=${fromCurrency}&to=${toCurrency}`
+            );
+            const historyData = await historyRes.json();
+
+            const chartFormatted = (Object.entries(historyData.rates) as [string, Record<string, number>][]).map(([date, value]) => ({
+                month: date,
+                value: value[toCurrency],
+            }));
+
+            setChartData(chartFormatted);
+
+            // Cache the chart data in localStorage
+            localStorage.setItem(`chart-${fromCurrency}-${toCurrency}`, JSON.stringify(chartFormatted));
+
+            // Cache the current timestamp for 1 hour expiry
+            localStorage.setItem('cacheTimestamp', now.toString());
+
+        } catch (e) {
+            console.error('Conversion error:', e);
+        }
+        setLoading(false);
+    };
+
     useEffect(() => {
         if (amount === '' || isNaN(Number(amount))) return;
-
-        const convert = async () => {
-            setLoading(true);
-            try {
-                const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
-                const data = await res.json();
-                const newRate = data.rates[toCurrency];
-                if (newRate) {
-                    setRate(newRate);
-                    setConverted(Number(amount) * newRate);
-                }
-
-                const endDate = new Date().toISOString().split('T')[0];
-                const start = new Date();
-                start.setFullYear(start.getFullYear() - 1);
-                const startDate = start.toISOString().split('T')[0];
-
-                const historyRes = await fetch(
-                    `https://api.frankfurter.app/${startDate}..${endDate}?from=${fromCurrency}&to=${toCurrency}`
-                );
-                const historyData = await historyRes.json();
-
-                const chartFormatted = (Object.entries(historyData.rates) as [string, Record<string, number>][])
-                    .map(([date, value]) => ({
-                        month: date,
-                        value: value[toCurrency],
-                    }));
-
-
-                setChartData(chartFormatted);
-            } catch (e) {
-                console.error('Conversion error:', e);
-            }
-            setLoading(false);
-        };
-
-        convert();
+        loadExchangeData();
     }, [amount, fromCurrency, toCurrency]);
 
-
     return (
-        <div className="min-h-screen px-4 pt-20">
-            <div className="max-w-3xl md:w-3xl mx-auto space-y-8 p-4 m-4 bg-white/30 dark:bg-white/10 rounded-xl border
-                      border-white/30 dark:border-white/10
-                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
-                      backdrop-blur-lg">
+        <div className="relative flex justify-center items-center min-h-[80vh] overflow-hidden pt-28">
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-gradient-to-b from-black/1 via-white/70 to-transparent dark:from-white/10 dark:via-[#0c0c0c]/50 dark:to-transparent" />
+            </div>
+            <div className="relative w-[90vw] max-w-3xl mx-auto space-y-8 p-8 border-white/20 shadow-md backdrop-blur-lg rounded-xl
+                      bg-white/50 dark:bg-white/10 z-10">
                 {/* Header */}
                 <div className="flex justify-between items-center space-x-4 mx-auto">
                     <h1 className="text-3xl font-bold">Currency Converter</h1>
-                    <Button className="bg-white dark:bg-black/30">
+                    <Button asChild className="bg-white dark:bg-black/30">
                         <Link href="/calculation">
                             <Undo2 className="text-black dark:text-white" />
                         </Link>

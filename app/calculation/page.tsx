@@ -1,69 +1,36 @@
 import FadeUpWhenVisible from "@/components/animation/FadeUpWhenVisible"
-import { Button } from "@/components/ui/button"
-import { quicksand } from "@/utils/font"
-import Link from "next/link"
 import { Metadata } from "next"
+import FeatureCard from "@/components/calculation/FeatureCard"
+import { features } from "@/utils/featurescal"
 export const metadata: Metadata = {
-    title: 'Currensa | DCA Calculators',
-    description: 'Access powerful financial tools including DCA investment planning, currency conversion, and dividend calculators — all in one place to support smarter investing decisions.',
+  title: 'Currensa | DCA Calculators',
+  description: 'Access powerful financial tools including DCA investment planning, currency conversion, and dividend calculators — all in one place to support smarter investing decisions.',
 }
 
 const calculation = () => {
-    return (
-        <div className="w-full z-10 flex flex-col justify-center items-center mt-20" style={{ minHeight: 'calc(100vh - 80px)' }}>
-            <FadeUpWhenVisible>
-                <h1 className={`${quicksand.className} text-3xl mb-2 text-center font-semibold`}>Function</h1>
-            </FadeUpWhenVisible>
-            <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3">
-                <div
-                    className="relative p-6 rounded-xl border min-h-[300px] transition-all duration-300 hover:scale-[1.01]
-                      bg-white/30 dark:bg-white/10
-                      border-white/30 dark:border-white/10
-                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
-                      backdrop-blur-lg"
-                >
-                    <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Calculate DCA Investment</h1>
-                    <h2 className={`${quicksand.className} text-lg mb-2 text-center font-md`}>
-                        Calculate the results of DCA investments
-                    </h2>
-                    <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <Link href={'/calculation/dca'}>View features</Link>
-                    </Button>
-                </div>
-                <div
-                    className="relative p-6 rounded-xl border min-h-[300px] transition-all duration-300 hover:scale-[1.01]
-                      bg-white/30 dark:bg-white/10
-                      border-white/30 dark:border-white/10
-                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
-                      backdrop-blur-lg"
-                >
-                    <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Currency conversion</h1>
-                    <h2 className={`${quicksand.className} text-lg mb-2 text-center font-md`}>
-                        Convert currencies in real time
-                    </h2>
-                    <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <Link href={'/calculation/conversion'}>View features</Link>
-                    </Button>
-                </div>
+  return (
+    <div className="w-full min-h-screen z-10 relative flex flex-col justify-center items-center pt-28">
+      {/* Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/1 via-white/70 to-transparent dark:from-white/10 dark:via-[#0c0c0c]/50 dark:to-transparent" />
+      </div>
 
+      {/* Content */}
+      <div className="relative z-10 w-full flex flex-col items-center">
+        <h1 className="text-3xl mb-6 text-center font-semibold">Function</h1>
 
-                <div
-                    className="relative p-6 rounded-xl border min-h-[300px] transition-all duration-300 hover:scale-[1.01]
-                      bg-white/30 dark:bg-white/10
-                      border-white/30 dark:border-white/10
-                      shadow-[0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.5)]
-                      backdrop-blur-lg"
-                >
-                    <h1 className={`${quicksand.className} text-2xl mb-2 text-center font-semibold`}>Calculate dividends</h1>
-                    <h2 className={`${quicksand.className} text-lg mb-2 text-center font-md`}>
-                        Tell us the dividend you want and the system will calculate how much you need to invest
-                    </h2>
-                    <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <Link href={'/calculation/dividends'}>View features</Link>
-                    </Button>
-                </div>
-            </div>
+        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 w-[80vw] max-w-6xl">
+          {features.map((feature) => (
+            <FeatureCard
+              key={feature.title}
+              title={feature.title}
+              description={feature.description}
+              link={feature.link}
+            />
+          ))}
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 export default calculation

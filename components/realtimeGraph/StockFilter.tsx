@@ -5,7 +5,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "../ui/button"
 import Link from "next/link"
 
-export type Category = 'all' | 'us' | 'th' | 'cn' | 'metal'| 'crypto' |'unknow'
+export type Category = 'all' | 'us' | 'th' | 'cn' | 'metal' | 'crypto' | 'forex' | 'unknow'
+const categories: { value: Category; label: string }[] = [
+  { value: 'all', label: 'ALL' },
+  { value: 'us', label: 'US' },
+  { value: 'th', label: 'TH' },
+  { value: 'cn', label: 'CN' },
+  { value: 'metal', label: 'Metal' },
+  { value: 'crypto', label: 'Crypto' },
+  { value: 'forex', label: 'Forex' },
+  { value: 'unknow', label: 'Unknow' },
+];
 
 export default function StockFilter({
   search,
@@ -31,17 +41,15 @@ export default function StockFilter({
           <SelectValue placeholder="Category" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">ALL</SelectItem>
-          <SelectItem value="us">US</SelectItem>
-          <SelectItem value="th">TH</SelectItem>
-          <SelectItem value="cn">CN</SelectItem>
-          <SelectItem value="metal">Metal</SelectItem>
-          <SelectItem value="crypto">Crypto</SelectItem>
-          <SelectItem value="unknow">Unknow</SelectItem>
+          {categories.map((category) => (
+            <SelectItem key={category.value} value={category.value}>
+              {category.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
-      <Button className='bg-white dark:bg-black/30'>
-        <Link href={'/'}><Undo2 className='text-black dark:text-white'/></Link>
+      <Button asChild className='bg-white dark:bg-black/30'>
+        <Link href={'/'}><Undo2 className='text-black dark:text-white' /></Link>
       </Button>
     </div>
   )

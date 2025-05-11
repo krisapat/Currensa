@@ -18,7 +18,7 @@ export default function MyModel(props: React.ComponentProps<'group'>) {
   const modelRef = useRef<THREE.Object3D>(null)
   useFrame(() => {
     if (modelRef.current) {
-      modelRef.current.rotation.y += 0.01 // หมุนรอบตัวเอง
+      modelRef.current.rotation.y += 0.01
     }
   })
 

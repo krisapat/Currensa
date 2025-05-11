@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useTheme } from 'next-themes'
 
 const MiniChart = ({
@@ -10,20 +10,17 @@ const MiniChart = ({
   uniqueId = 'default',
 }) => {
   const { resolvedTheme } = useTheme()
-  const [isClient, setIsClient] = useState(false)
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    if (!isClient || !resolvedTheme) return
+    if (!containerRef.current || !resolvedTheme) return
 
-    const container = document.getElementById(`tradingview-mini-chart-${uniqueId}`)
-    if (!container) return
+    // ล้าง container ก่อน
+    containerRef.current.innerHTML = ''
 
-    container.innerHTML = '' // ล้างของเดิมก่อน
     const script = document.createElement('script')
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js'
+    script.src =
+      'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js'
     script.async = true
     script.innerHTML = JSON.stringify({
       symbol,
@@ -36,10 +33,23 @@ const MiniChart = ({
       autosize: true,
     })
 
-    container.appendChild(script)
-  }, [symbol, resolvedTheme, width, height, uniqueId, isClient])
+    containerRef.current.appendChild(script)
 
-  return <div className="rounded-lg overflow-hidden" id={`tradingview-mini-chart-${uniqueId}`} />
+    return () => {
+      // Cleanup on unmount
+      if (containerRef.current) {
+        containerRef.current.innerHTML = ''
+      }
+    }
+  }, [symbol, resolvedTheme, height, width])
+
+  return (
+    <div
+      ref={containerRef}
+      className="rounded-lg overflow-hidden"
+      id={`tradingview-mini-chart-${uniqueId}`}
+    />
+  )
 }
 
 export default MiniChart

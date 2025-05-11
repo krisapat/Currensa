@@ -10,7 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${quicksand.className} bg-[url('/img/bg/bg-light.png')] dark:bg-[url('/img/bg/bg-dark.png')] bg-no-repeat bg-center bg-cover bg-fixed`}>
+      <body className={`${quicksand.className} bg-white dark:bg-[#0c0c0c]`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
