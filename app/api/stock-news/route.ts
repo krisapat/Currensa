@@ -2,8 +2,14 @@ import { NextResponse } from 'next/server'
 import { parseStringPromise } from 'xml2js'
 import NodeCache from 'node-cache'
 
-// Cache memory 10 นาที
 const stockNewsCache = new NodeCache({ stdTTL: 600 })
+
+interface RSSItem {
+  title?: string[];
+  link?: string[];
+  pubDate?: string[];
+  description?: string[];
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -20,15 +26,15 @@ export async function GET(request: Request) {
 
     if (!res.ok) {
       console.error(`Yahoo RSS error: ${res.status} ${res.statusText}`)
-      return NextResponse.json({ articles: [] }, { status: 200 }) // Return empty list gracefully
+      return NextResponse.json({ articles: [] }, { status: 200 })
     }
 
     const xml = await res.text()
     const parsed = await parseStringPromise(xml, { trim: true })
 
-    const items = parsed?.rss?.channel?.[0]?.item ?? []
+    const items: RSSItem[] = parsed?.rss?.channel?.[0]?.item ?? []
 
-    const articles = items.slice(0, 10).map((item: any) => ({
+    const articles = items.slice(0, 10).map((item) => ({
       title: item.title?.[0] ?? 'No title available',
       url: item.link?.[0] ?? '#',
       date: item.pubDate
@@ -40,7 +46,6 @@ export async function GET(request: Request) {
       description: item.description?.[0] ?? 'No description available',
     }))
 
-    // Even if articles = [], cache it to avoid frequent failed requests
     stockNewsCache.set(symbol, articles)
 
     return NextResponse.json({ articles })

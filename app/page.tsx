@@ -45,35 +45,47 @@ const page = () => {
 
       {/* FEATURE CARDS */}
       <section id="features" className="w-[95vw] mx-auto mt-20 py-12 px-6 rounded-xl backdrop-blur-md bg-white/50 dark:bg-white/10 border border-white/20 shadow-lg">
-        <h2 className="text-3xl font-semibold text-center mb-12">What can we do?</h2>
+        <FadeUpWhenVisible>
+          <h2 className="text-3xl font-semibold text-center mb-12">What can we do?</h2>
+        </FadeUpWhenVisible>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-center">
-          <FeatureCard icon={<LineChart className="w-10 h-10 text-blue-500 mx-auto mb-4" />} title="Real-time stock chart" desc="View minute-by-minute stock price movements with indicators from TradingView." />
-          <FeatureCard icon={<Calculator className="w-10 h-10 text-green-500 mx-auto mb-4" />} title="Financial calculator" desc="Calculate DCA, convert currencies and analyze dividends in a few clicks." />
+          <FadeUpWhenVisible>
+            <FeatureCard icon={<LineChart className="w-10 h-10 text-blue-500 mx-auto mb-4" />} title="Real-time stock chart" desc="View minute-by-minute stock price movements with indicators from TradingView." />
+          </FadeUpWhenVisible>
+          <FadeUpWhenVisible>
+            <FeatureCard icon={<Calculator className="w-10 h-10 text-green-500 mx-auto mb-4" />} title="Financial calculator" desc="Calculate DCA, convert currencies and analyze dividends in a few clicks." />
+          </FadeUpWhenVisible>
         </div>
       </section>
 
       {/* FUNCTION SECTION */}
       <section className="w-full py-20 px-4">
-        <h2 className="text-3xl font-semibold text-center mb-12">Main features of Currensa</h2>
+        <FadeUpWhenVisible>
+          <h2 className="text-3xl font-semibold text-center mb-12">Main features of Currensa</h2>
+        </FadeUpWhenVisible>
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          <FunctionCard
-            title="Real-time stock chart"
-            content={[
-              'Follow live asset charts',
-              'Free indicators from TradingView',
-              'Multi-asset portfolio including stocks, crypto and indices',
-            ]}
-            link="/Real-time_graph"
-          />
-          <FunctionCard
-            title="Calculating tools"
-            content={[
-              'Calculate DCA Investment',
-              'Convert foreign currencies',
-              'Calculate dividend yield',
-            ]}
-            link="/calculation"
-          />
+          <FadeUpWhenVisible>
+            <FunctionCard
+              title="Real-time stock chart"
+              content={[
+                'Follow live asset charts',
+                'Free indicators from TradingView',
+                'Multi-asset portfolio including stocks, crypto and indices',
+              ]}
+              link="/Real-time_graph"
+            />
+          </FadeUpWhenVisible>
+          <FadeUpWhenVisible>
+            <FunctionCard
+              title="Calculating tools"
+              content={[
+                'Calculate DCA Investment',
+                'Convert foreign currencies',
+                'Calculate dividend yield',
+              ]}
+              link="/calculation"
+            />
+          </FadeUpWhenVisible>
         </div>
       </section>
 

@@ -17,18 +17,21 @@ const calculation = () => {
 
       {/* Content */}
       <div className="relative z-10 w-full flex flex-col items-center">
-        <h1 className="text-3xl mb-6 text-center font-semibold">Function</h1>
-
-        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 w-[80vw] max-w-6xl">
-          {features.map((feature) => (
-            <FeatureCard
-              key={feature.title}
-              title={feature.title}
-              description={feature.description}
-              link={feature.link}
-            />
-          ))}
-        </div>
+        <FadeUpWhenVisible>
+          <h1 className="text-3xl mb-6 text-center font-semibold">Function</h1>
+        </FadeUpWhenVisible>
+        <FadeUpWhenVisible>
+          <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 w-[80vw] max-w-6xl">
+            {features.map((feature) => (
+              <FeatureCard
+                key={feature.title}
+                title={feature.title}
+                description={feature.description}
+                link={feature.link}
+              />
+            ))}
+          </div>
+        </FadeUpWhenVisible>
       </div>
     </div>
   )
